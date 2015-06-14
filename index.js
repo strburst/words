@@ -17,7 +17,7 @@ var server = http.createServer(function (request, response) {
 
   response.writeHead(200, {'Content-Type:': 'text/html'});
 
-  var result = '<p>Your asked for the following things:</p>\n';
+  var result = '<p>You\'re asked for the following things:</p>\n';
   for (key in query) {
     result += '<p>' + key + ': ' + query[key] + '</p>\n';
   }
