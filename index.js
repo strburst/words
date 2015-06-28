@@ -9,18 +9,45 @@ var words = ['hello', 'abacus', 'miranda', 'revoke', 'intersect', 'empanada',
 var header = fs.readFileSync('header.html');
 var footer = fs.readFileSync('footer.html');
 
-var server = http.createServer(function (request, response) {
-  console.log(request.method + ' ' + request.url);
+var filterMethod = {}
 
-  var query = qs.parse(url.parse(request.url).query);
-  console.log(qs.parse(url.parse(request.url).query));
+filterMethod.beginsWith = function(begin, words) {
+  return words.filter(function(elem) {
+    return elem.substr(0, begin.length) == begin;
+  });
+}
+
+filterMethod.endsWith = function(end, words) {
+  return words.filter(function(elem) {
+    return elem.substr(elem.length - end.length) == end;
+  });
+}
+
+var server = http.createServer(function (request, response) {
+  var requestUrl = url.parse(request.url)
+  var query = qs.parse(requestUrl.query);
+  var path = requestUrl.pathname;
+
+  console.log('%s request for %s', request.method, request.url);
 
   response.writeHead(200, {'Content-Type:': 'text/html'});
 
-  var result = '<p>You\'re asked for the following things:</p>\n';
+  var result = '<p>You asked for the following things:</p>\n';
   for (key in query) {
     result += '<p>' + key + ': ' + query[key] + '</p>\n';
   }
+
+  result += '<p>The following words match your query:</p>\n';
+  var filteredWords = words;
+  for (var key in query) {
+    if (typeof filterMethod[key] == 'function') {
+      filteredWords = filterMethod[key](query[key], filteredWords);
+    }
+  }
+
+  filteredWords.forEach(function(elem) {
+    result += '<p>' + elem + '</p>\n';
+  });
 
   response.write(header + result + footer);
   response.end();
