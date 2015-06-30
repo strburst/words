@@ -56,7 +56,10 @@ var server = http.createServer(function (request, response) {
   }
 
   filteredWords.forEach(function(elem) {
-    result += '<p>' + elem + '</p>\n';
+    result += '<p><a href="http://dictionary.reference.com/browse/' +
+    elem + '?s=t" target="_blank" title="Definition">' + elem +
+    '</a></p>\n';
+
   });
 
   response.write(header + result + footer);
