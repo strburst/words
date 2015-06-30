@@ -4,7 +4,7 @@ var url = require('url');
 var qs = require('querystring');
 
 var words = ['hello', 'abacus', 'miranda', 'revoke', 'intersect', 'empanada',
-    'merge', 'abrasion', 'serendipitous', 'pelican', 'finally'];
+    'merge', 'abrasion', 'serendipitous', 'pelican', 'finally', 'ort'];
 
 var header = fs.readFileSync('header.html');
 var footer = fs.readFileSync('footer.html');
@@ -24,9 +24,13 @@ filterMethod.endsWith = function(end, words) {
 }
 
 filterMethod.lengthIs = function(len, words) {
-  return words.filter(function(elem) {
-    return elem.length == len;
-  });
+  if (len == "") {
+    return words;
+  } else {
+    return words.filter(function(elem) {
+      return elem.length == len;
+    });
+  }
 }
 
 var server = http.createServer(function (request, response) {
@@ -38,12 +42,12 @@ var server = http.createServer(function (request, response) {
 
   response.writeHead(200, {'Content-Type:': 'text/html'});
 
-  var result = '<p>You asked for the following things:</p>\n';
+  var result = '<h2>You asked for the following things:</h2>\n';
   for (key in query) {
     result += '<p>' + key + ': ' + query[key] + '</p>\n';
   }
 
-  result += '<p>The following words match your query:</p>\n';
+  result += '<h2>The following words match your query:</h2>\n';
   var filteredWords = words;
   for (var key in query) {
     if (typeof filterMethod[key] == 'function') {
