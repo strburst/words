@@ -4,7 +4,7 @@ var url = require('url');
 var qs = require('querystring');
 
 var words = ['hello', 'abacus', 'miranda', 'revoke', 'intersect', 'empanada',
-    'merge', 'abrasion', 'serendipitous', 'pelican', 'finally', 'ort'];
+    'merge', 'abrasion', 'serendipitous', 'pelican', 'finally', 'ort', 'thing'];
 
 var header = fs.readFileSync('header.html');
 var footer = fs.readFileSync('footer.html');
