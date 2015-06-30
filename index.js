@@ -4,7 +4,7 @@ var url = require('url');
 var qs = require('querystring');
 
 var words = ['hello', 'abacus', 'miranda', 'revoke', 'intersect', 'empanada',
-    'merge', 'abrasion'];
+    'merge', 'abrasion', 'serendipitous', 'pelican', 'finally'];
 
 var header = fs.readFileSync('header.html');
 var footer = fs.readFileSync('footer.html');
@@ -20,6 +20,12 @@ filterMethod.beginsWith = function(begin, words) {
 filterMethod.endsWith = function(end, words) {
   return words.filter(function(elem) {
     return elem.substr(elem.length - end.length) == end;
+  });
+}
+
+filterMethod.lengthIs = function(len, words) {
+  return words.filter(function(elem) {
+    return elem.length == len;
   });
 }
 
