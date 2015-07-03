@@ -2,6 +2,7 @@ var http = require('http');
 var fs = require('fs');
 var url = require('url');
 var qs = require('querystring');
+var filters = require('./filters.js');
 
 var words = ['hello', 'abacus', 'miranda', 'revoke', 'intersect', 'empanada',
     'merge', 'abrasion', 'serendipitous', 'pelican', 'finally', 'ort', 'thing'];
@@ -9,34 +10,9 @@ var words = ['hello', 'abacus', 'miranda', 'revoke', 'intersect', 'empanada',
 var header = fs.readFileSync('header.html');
 var footer = fs.readFileSync('footer.html');
 
-var filterMethod = {}
-
-filterMethod.beginsWith = function(begin, words) {
-  return words.filter(function(elem) {
-    return elem.substr(0, begin.length) == begin;
-  });
-}
-
-filterMethod.endsWith = function(end, words) {
-  return words.filter(function(elem) {
-    return elem.substr(elem.length - end.length) == end;
-  });
-}
-
-filterMethod.lengthIs = function(len, words) {
-  if (len == "") {
-    return words;
-  } else {
-    return words.filter(function(elem) {
-      return elem.length == len;
-    });
-  }
-}
-
 var server = http.createServer(function (request, response) {
   var requestUrl = url.parse(request.url)
   var query = qs.parse(requestUrl.query);
-  var path = requestUrl.pathname;
 
   console.log('%s request for %s', request.method, request.url);
 
@@ -48,18 +24,12 @@ var server = http.createServer(function (request, response) {
   }
 
   result += '<h2>The following words match your query:</h2>\n';
-  var filteredWords = words;
-  for (var key in query) {
-    if (typeof filterMethod[key] == 'function') {
-      filteredWords = filterMethod[key](query[key], filteredWords);
-    }
-  }
+  var matchesAll = filters.composeFilter(query);
+  var filteredWords = words.filter(matchesAll);;
 
   filteredWords.forEach(function(elem) {
-    result += '<p><a href="http://dictionary.reference.com/browse/' +
-    elem + '?s=t" target="_blank" title="Definition">' + elem +
-    '</a></p>\n';
-
+    result += '<p><a href="http://dictionary.reference.com/browse/' + elem +
+      '?s=t" target="_blank" title="Definition">' + elem + '</a></p>\n';
   });
 
   response.write(header + result + footer);
