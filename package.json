@@ -1,0 +1,19 @@
+{
+  "name": "words",
+  "version": "0.1.0",
+  "description": "Simple web app to search the dictionary for words that begin with a certain string, have a certain length, etc.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo No tests at the moment"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/strburst/words.git"
+  },
+  "author": "Eleanor Eason, Allen Zheng",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/strburst/words/issues"
+  },
+  "homepage": "https://github.com/strburst/words#readme"
+}
