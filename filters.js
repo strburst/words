@@ -1,14 +1,17 @@
+/** Test whether a word begins with the given string. */
 exports.beginsWith = function(begin, word) {
   return word.substr(0, begin.length) == begin;
-}
+};
 
+/** Test whether a word ends with the given string. */
 exports.endsWith = function(end, word) {
   return word.substr(word.length - end.length) == end;
-}
+};
 
+/** Test whether a word has the given length. */
 exports.lengthIs = function(len, word) {
   return word.length == len;
-}
+};
 
 exports.composeFilter = function(query) {
   var filterKeys = {};
@@ -25,5 +28,5 @@ exports.composeFilter = function(query) {
       }
     }
     return true;
-  }
-}
+  };
+};

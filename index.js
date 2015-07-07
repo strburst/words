@@ -11,7 +11,7 @@ var header = fs.readFileSync('header.html');
 var footer = fs.readFileSync('footer.html');
 
 var server = http.createServer(function (request, response) {
-  var requestUrl = url.parse(request.url)
+  var requestUrl = url.parse(request.url);
   var query = qs.parse(requestUrl.query);
 
   console.log('%s request for %s', request.method, request.url);
@@ -19,13 +19,13 @@ var server = http.createServer(function (request, response) {
   response.writeHead(200, {'Content-Type:': 'text/html'});
 
   var result = '<h2>You asked for the following things:</h2>\n';
-  for (key in query) {
+  for (var key in query) {
     result += '<p>' + key + ': ' + query[key] + '</p>\n';
   }
 
   result += '<h2>The following words match your query:</h2>\n';
   var matchesAll = filters.composeFilter(query);
-  var filteredWords = words.filter(matchesAll);;
+  var filteredWords = words.filter(matchesAll);
 
   filteredWords.forEach(function(elem) {
     result += '<p><a href="http://dictionary.reference.com/browse/' + elem +
