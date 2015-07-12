@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="utf8" />
-    <title>Test page</title>
+    <title>Search for words</title>
     <style>
       /*Body: blue, helvetica text*/
       body {
@@ -68,22 +68,35 @@
     </style>
   </head>
   <body>
-  <div id="main">
-    <form action="/search" method="get">
-      <table>
-        <tr>
-          <td><label for="beginsWith">Begins with: </label></td>
-          <td><input type="text" id="beginsWith" name="beginsWith"/></td>
-        </tr>
-        <tr>
-          <td><label for="endsWith">Ends with: </label></td>
-          <td><input type="text" id="endsWith" name="endsWith"/></td>
-        </tr>
-        <tr>
-          <td><label for="lengthIs">Length:</label></td>
-          <td><input type="number" id="lengthIs" name="lengthIs"/></td>
-        </tr>
-      </table>
+    <div id="main">
+      <form action="/search" method="get">
+        <table>
+          <tr>
+            <td><label for="beginsWith">Begins with: </label></td>
+            <td><input type="text" id="beginsWith" name="beginsWith"/></td>
+          </tr>
+          <tr>
+            <td><label for="endsWith">Ends with: </label></td>
+            <td><input type="text" id="endsWith" name="endsWith"/></td>
+          </tr>
+          <tr>
+            <td><label for="lengthIs">Length:</label></td>
+            <td><input type="number" id="lengthIs" name="lengthIs"/></td>
+          </tr>
+        </table>
 
-      <p><button type="submit">Submit</button></p>
-    </form>
+        <p><button type="submit">Submit</button></p>
+      </form>
+
+      <h2>Looks like you asked for the following things</h2>
+      {{#each query}}
+      <p>{{@key}}: {{this}}</p>
+      {{/each}}
+
+      <h2>Words matching your query</h2>
+      {{#each wordList}}
+      <p>{{#word}}{{this}}{{/word}}</p>
+      {{/each}}
+    </div>
+  </body>
+</html>

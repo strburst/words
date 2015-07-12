@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/strburst/words/issues"
   },
-  "homepage": "https://github.com/strburst/words#readme"
+  "homepage": "https://github.com/strburst/words#readme",
+  "dependencies": {
+    "handlebars": "^3.0.3"
+  }
 }
