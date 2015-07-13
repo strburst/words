@@ -13,6 +13,7 @@ exports.lengthIs = function(len, word) {
   return word.length == len;
 };
 
+/** Create a filter that tests all of the properties in query. */
 exports.composeFilter = function(query) {
   var filterKeys = {};
   for (var key in query) {

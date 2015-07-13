@@ -6,6 +6,7 @@ var qs = require('querystring');
 var filters = require('./filters.js');
 var handlebars = require('handlebars');
 
+// Word list (for now)
 var words = ['hello', 'abacus', 'miranda', 'revoke', 'intersect', 'empanada',
     'merge', 'abrasion', 'serendipitous', 'pelican', 'finally', 'ort', 'thing'];
 
@@ -16,7 +17,7 @@ var makePage = handlebars.compile(pageTemplate);
 handlebars.registerHelper('word', function(options) {
   var word = options.fn(this);
   return '<a href="http://dictionary.reference.com/browse/' + word +
-    '" target="_blank" title="Definition">' + word + '</a>';
+    '" target="_blank" title="Definition of ' + word + '">' + word + '</a>';
 });
 
 var server = http.createServer(function (request, response) {
@@ -27,6 +28,7 @@ var server = http.createServer(function (request, response) {
 
   response.writeHead(200, {'Content-Type:': 'text/html'});
 
+  // Filter the wordlist based on the query
   var matchesAll = filters.composeFilter(query);
   var filteredWords = words.filter(matchesAll);
 
